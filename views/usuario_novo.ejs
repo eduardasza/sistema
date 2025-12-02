@@ -1,0 +1,23 @@
+<h4>Criar Usuário</h4>
+<form method="post" action="/admin/usuarios/novo">
+  <div class="mb-3">
+    <label>Nome</label>
+    <input name="nome" class="form-control" />
+  </div>
+  <div class="mb-3">
+    <label>Email</label>
+    <input name="email" class="form-control" />
+  </div>
+  <div class="mb-3">
+    <label>Senha</label>
+    <input name="senha" type="password" class="form-control" />
+  </div>
+  <div class="mb-3">
+    <label>Tipo</label>
+    <select name="tipo" class="form-control">
+      <option value="comum">comum</option>
+      <option value="admin">admin</option>
+    </select>
+  </div>
+  <button class="btn btn-primary">Criar</button>
+</form>

@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-between mb-3">
+  <h4>Espaços</h4>
+  <% if (user && user.tipo === 'admin') { %>
+    <a href="/espacos/novo" class="btn btn-sm btn-primary">Novo espaço</a>
+  <% } %>
+</div>
+<table class="table">
+  <thead><tr><th>Nome</th><th>Tipo</th><th>Capacidade</th></tr></thead>
+  <tbody>
+    <% espacos.forEach(e => { %>
+      <tr><td><%= e.nome %></td><td><%= e.tipo %></td><td><%= e.capacidade %></td></tr>
+    <% }) %>
+  </tbody>
+</table>

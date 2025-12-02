@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-between mb-3">
+  <h4>Reservas</h4>
+  <a href="/reservas/novo" class="btn btn-sm btn-primary">Fazer reserva</a>
+</div>
+
+<table class="table">
+  <thead><tr><th>Espaço</th><th>Usuário</th><th>Data</th><th>Início</th><th>Fim</th><th>Status</th><th>Ações</th></tr></thead>
+  <tbody>
+    <% reservas.forEach(r => { %>
+      <tr>
+        <td><%= r.espaco?.nome %></td>
+        <td><%= r.usuario?.nome %></td>
+        <td><%= r.dataReserva.toISOString().slice(0,10) %></td>
+        <td><%= r.horaInicio %></td>
+        <td><%= r.horaFim %></td>
+        <td><%= r.status %></td>
+        <td>
+          <% if (user && (user.tipo === 'admin' || user.id === r.usuarioId) && r.status === 'ativa') { %>
+            <form method="post" action="/reservas/<%= r.id %>/cancelar" style="display:inline">
+              <button class="btn btn-sm btn-danger">Cancelar</button>
+            </form>
+          <% } %>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

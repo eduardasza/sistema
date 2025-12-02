@@ -1,0 +1,23 @@
+<div class="d-flex justify-content-between mb-3">
+  <h4>Usuários</h4>
+  <a href="/admin/usuarios/novo" class="btn btn-sm btn-primary">Criar usuário</a>
+</div>
+<table class="table">
+  <thead><tr><th>Nome</th><th>Email</th><th>Tipo</th><th>Ações</th></tr></thead>
+  <tbody>
+    <% usuarios.forEach(u => { %>
+      <tr>
+        <td><%= u.nome %></td>
+        <td><%= u.email %></td>
+        <td><%= u.tipo %></td>
+        <td>
+          <% if (u.tipo !== 'bloqueado') { %>
+            <form method="post" action="/admin/usuarios/<%= u.id %>/bloquear" style="display:inline">
+              <button class="btn btn-sm btn-danger">Bloquear</button>
+            </form>
+          <% } %>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
