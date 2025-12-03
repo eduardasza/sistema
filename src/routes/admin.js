@@ -3,7 +3,7 @@ const router = express.Router();
 const prisma = require('../prismaClient');
 const bcrypt = require('bcryptjs');
 
-// middleware simples de verificação de admin
+
 function onlyAdmin(req, res, next) {
   if (!req.session.user || req.session.user.tipo !== 'admin') {
     req.flash('error', 'Acesso negado: administrador');

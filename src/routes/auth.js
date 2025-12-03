@@ -3,12 +3,12 @@ const router = express.Router();
 const prisma = require('../prismaClient');
 const bcrypt = require('bcryptjs');
 
-// login form
+
 router.get('/login', (req, res) => {
   res.render('login');
 });
 
-// login action
+
 router.post('/login', async (req, res) => {
   const { email, senha } = req.body;
   const user = await prisma.usuario.findUnique({ where: { email }});

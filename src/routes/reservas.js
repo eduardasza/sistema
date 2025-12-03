@@ -14,7 +14,7 @@ function overlaps(aStart, aEnd, bStart, bEnd) {
   return (aStart < bEnd) && (bStart < aEnd);
 }
 
-// listar reservas e calendário básico
+
 router.get('/', ensureAuth, async (req, res) => {
   const { month, year } = req.query;
   const reservas = await prisma.reserva.findMany({ include: { espaco: true, usuario: true }});
@@ -30,7 +30,7 @@ router.get('/novo', ensureAuth, async (req, res) => {
 router.post('/novo', ensureAuth, async (req, res) => {
   const usuarioId = req.session.user.id;
   const { espacoId, dataReserva, horaInicio, horaFim } = req.body;
-  // checar conflitos: mesma data e mesmo espaço com overlap de hora
+
   const inicio = horaInicio;
   const fim = horaFim;
   const conflitos = await prisma.reserva.findMany({
@@ -40,7 +40,7 @@ router.post('/novo', ensureAuth, async (req, res) => {
       status: 'ativa'
     }
   });
-  // checar sobreposição simples (strings HH:MM)
+
   for (const c of conflitos) {
     if (overlaps(inicio, fim, c.horaInicio, c.horaFim)) {
       req.flash('error', 'Horário em conflito com outra reserva');
@@ -67,7 +67,7 @@ router.post('/:id/cancelar', ensureAuth, async (req, res) => {
     req.flash('error', 'Reserva não encontrada');
     return res.redirect('/reservas');
   }
-  // só admin ou dono pode cancelar
+
   if (req.session.user.tipo !== 'admin' && req.session.user.id !== reserva.usuarioId) {
     req.flash('error', 'Acesso negado');
     return res.redirect('/reservas');
