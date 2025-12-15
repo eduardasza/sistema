@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"  // Adicionando o caminho para o banco de dados SQLite
 }
 
 model Usuario {
@@ -29,13 +29,17 @@ model Espaco {
 
 model Reserva {
   id          Int      @id @default(autoincrement())
-  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
   usuarioId   Int
-  espaco      Espaco   @relation(fields: [espacoId], references: [id])
   espacoId    Int
   dataReserva DateTime
   horaInicio  String
   horaFim     String
   status      String   @default("ativa")
   criadoEm    DateTime @default(now())
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+  espaco  Espaco  @relation(fields: [espacoId], references: [id])
+
+  @@unique([espacoId, dataReserva, horaInicio, horaFim]) 
 }
+

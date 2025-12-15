@@ -7,7 +7,6 @@ const expressLayouts = require('express-ejs-layouts');
 const app = express();
 const port = process.env.PORT || 3000;
 
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
 app.use(expressLayouts);
@@ -21,8 +20,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
-app.use(flash());
 
+app.use(flash());
 
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
@@ -30,17 +29,10 @@ app.use((req, res, next) => {
   next();
 });
 
-
-const authRoutes = require('./routes/auth');
-const adminRoutes = require('./routes/admin');
-const espacosRoutes = require('./routes/espacos');
-const reservasRoutes = require('./routes/reservas');
-
-app.use('/', authRoutes);
-app.use('/admin', adminRoutes);
-app.use('/espacos', espacosRoutes);
-app.use('/reservas', reservasRoutes);
-
+app.use('/', require('./routes/auth'));
+app.use('/admin', require('./routes/admin'));
+app.use('/espacos', require('./routes/espacos'));
+app.use('/reservas', require('./routes/reservas'));
 
 app.get('/', (req, res) => {
   if (!req.session.user) return res.redirect('/login');
@@ -48,5 +40,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`App rodando em http://localhost:${port}`);
+  console.log(`Rodando em http://localhost:${port}`);
 });

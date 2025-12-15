@@ -1,9 +1,21 @@
 <div class="d-flex justify-content-between mb-3">
   <h4>Usuários</h4>
-  <a href="/admin/usuarios/novo" class="btn btn-sm btn-primary">Criar usuário</a>
+  <% if (user && user.tipo === 'admin') { %>
+    <a href="/admin/usuarios/novo" class="btn btn-sm btn-primary">
+      Novo usuário
+    </a>
+  <% } %>
 </div>
+
 <table class="table">
-  <thead><tr><th>Nome</th><th>Email</th><th>Tipo</th><th>Ações</th></tr></thead>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Tipo</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
   <tbody>
     <% usuarios.forEach(u => { %>
       <tr>
@@ -21,3 +33,6 @@
     <% }) %>
   </tbody>
 </table>
+
+
+

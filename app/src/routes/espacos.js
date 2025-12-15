@@ -4,7 +4,7 @@ const prisma = require('../prismaClient');
 
 function onlyAdmin(req, res, next) {
   if (!req.session.user || req.session.user.tipo !== 'admin') {
-    req.flash('error', 'Acesso negado: administrador');
+    req.flash('error', 'Acesso negado');
     return res.redirect('/login');
   }
   next();
@@ -21,11 +21,19 @@ router.get('/novo', onlyAdmin, (req, res) => {
 
 router.post('/novo', onlyAdmin, async (req, res) => {
   const { nome, tipo, capacidade, descricao } = req.body;
+
   await prisma.espaco.create({
-    data: { nome, tipo, capacidade: Number(capacidade || 0), descricao }
+    data: {
+      nome,
+      tipo,
+      capacidade: Number(capacidade),
+      descricao
+    }
   });
+
   req.flash('success', 'Espaço criado');
   res.redirect('/espacos');
 });
 
 module.exports = router;
+

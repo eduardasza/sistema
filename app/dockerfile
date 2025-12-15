@@ -1,0 +1,22 @@
+FROM node:18-alpine
+
+
+WORKDIR /usr/src/app
+
+
+COPY package*.json ./
+
+
+# Instala as dependências (incluindo o Express)
+RUN npm install
+
+
+COPY . .
+
+
+# Expõe a porta que a aplicação usará internamente
+EXPOSE 3000
+
+
+# Comando para iniciar o servidor
+CMD ["node", "index.js"]

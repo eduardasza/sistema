@@ -1,0 +1,37 @@
+services:
+  # Serviço da Aplicação (Node.js + Express)
+  app:
+    build: ./app
+    container_name: app_node_express
+    restart: always
+    # REDIRECIONAMENTO DE PORTAS:
+    # Mapeia a porta 80 do servidor (Host) para a porta 3000 do container
+    ports:
+      - "80:3000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_USER=postgres
+      - DB_PASS=suasenha
+      - DB_NAME=projeto_db
+
+
+  # Serviço de Banco de Dados (PostgreSQL)
+  db:
+    image: postgres:15
+    container_name: db_postgres
+    restart: always
+    ports: 
+      - "5432:5432" 
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: suasenha
+      POSTGRES_DB: projeto_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+
+volumes:
+  pgdata:
